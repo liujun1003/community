@@ -1,0 +1,111 @@
+# 服务器配置
+server:
+  port: 8080
+  servlet:
+    context-path:
+
+# mybatis配置
+mybatis:
+  type-aliases-package: com.example.community.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    use-generated-keys: true
+    map-underscore-to-camel-case: true
+
+spring:
+  # Quartz配置
+  quartz:
+    job-store-type: jdbc
+    scheduler-name: communityScheduler
+    properties:
+      org.quartz:
+          scheduler:
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            isClustered: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 5
+  # 线程池配置
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 10
+        queue-capacity: 100
+    scheduling:
+      pool:
+        size: 5
+  # Elasticsearch服务配置
+  elasticsearch:
+    rest:
+      uris: 127.0.0.1:9200
+  # kafka服务配置
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: community-consumer-group
+      enable-auto-commit: true
+      auto-commit-interval: 3000
+  # redis服务配置
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+  # servlet表单配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  # 数据源配置
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/community?useUnicode=True&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: 486597
+  # 邮箱配置
+  mail:
+    host: smtp.qq.com
+    port: 465
+    nickname: 牛客社区
+    username: 205974596@qq.com
+    password: zdobglyiylwnbhge
+    protocol: smtp
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+
+# 项目自定义属性配置
+community:
+  path:
+    domain: http://localhost
+    upload: D:/DevData/community/upload
+
+# wkhtmltopdf工具配置
+wk:
+  command: D:/DevSoftware/wkhtmltopdf/bin/wkhtmltoimage
+  imagePath: D:/DevData/community/wkImage
+
+# 七牛云配置
+qiniu:
+  key:
+    access: enodpX6oDzq5lVy0PffzQnN29OftJKsHPj05Yrvi
+    secret: 6uA0JbsUSdwo9-8_v-7SqO4OMpNLlIcv8o0CibDL
+  bucket:
+    header:
+      name: lj-header
+      url: http://rgag3qmzf.hn-bkt.clouddn.com
+    share:
+      name: lj-share
+      url: http://rgagka90t.hn-bkt.clouddn.com
+
+# caffeine配置
+caffeine:
+  posts:
+    max-size: 15
+    expire-seconds: 180
